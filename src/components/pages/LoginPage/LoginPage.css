@@ -1,0 +1,14 @@
+.login-page {
+	padding: 16px 24px;
+}
+
+.login-page .login-decor {
+	width: 25%;
+	height: 25%;
+	margin: 8px auto 24px;
+}
+
+.login-page h1 {
+	margin-bottom: 16px;
+	text-align: center;
+}

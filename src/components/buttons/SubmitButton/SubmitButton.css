@@ -1,0 +1,12 @@
+.btn-submit {
+	padding: 8px 16px;
+	background: ghostwhite;
+	color: gray;
+	border: none;
+	border-radius: 4px;
+	font-weight: bold;
+}
+
+.btn-submit:hover {
+	cursor: pointer;
+}
