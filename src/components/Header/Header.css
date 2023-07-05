@@ -1,0 +1,35 @@
+.header {
+	padding: 8px 0;
+	justify-content: space-between;
+	color: gray;
+	font-size: 12px;
+}
+
+.list-menu {
+	padding-left: 16px;
+	gap: 40px;
+	list-style-type: none;
+}
+
+.menu-header {
+	font-weight: bold;
+}
+
+.menu-header.selected {
+	border-bottom: 2px solid black;
+}
+
+.btn-logout {
+	margin-right: 16px;
+	background: transparent;
+	border: none;
+}
+
+.menu-header:hover,
+.btn-logout:hover {
+	cursor: pointer;
+}
+
+.menu-header:hover {
+	color: black;
+}
