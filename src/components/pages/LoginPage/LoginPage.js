@@ -3,6 +3,9 @@ import SubmitButton from "components/buttons/SubmitButton";
 import { USER, PASSWORD } from "constants";
 import loginDecor from "images/login-decor.jpg";
 
+/**
+ * @description Represents the login page
+ */
 const LoginPage = (props) => {
 	return (
 		<div className="login-page">
