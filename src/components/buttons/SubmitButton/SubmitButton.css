@@ -10,3 +10,12 @@
 .btn-submit:hover {
 	cursor: pointer;
 }
+
+.btn-submit.disabled {
+	background: whitesmoke;
+	color: darkgray;
+}
+
+.btn-submit.disabled:hover {
+	cursor: not-allowed;
+}

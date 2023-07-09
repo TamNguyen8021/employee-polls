@@ -1,0 +1,19 @@
+.new-page {
+	margin: 24px 10%;
+}
+
+.new-page .title {
+	font-size: 24px;
+}
+
+.new-page .sub-title {
+	color: gray;
+	font-size: 16px;
+	font-weight: normal;
+}
+
+.option-container {
+	margin: 24px 0;
+	gap: 16px;
+	align-items: stretch;
+}
