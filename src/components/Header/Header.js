@@ -31,12 +31,11 @@ const Header = (props) => {
 					))}
 				</ul>
 			</nav>
-			<button
+			<input
 				className="btn-logout"
 				type="button"
-				value={LOGOUT}>
-				{LOGOUT}
-			</button>
+				value={LOGOUT}
+			/>
 		</div>
 	);
 };
