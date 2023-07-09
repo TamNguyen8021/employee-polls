@@ -1,0 +1,30 @@
+.poll-overview {
+	padding: 8px;
+	border: 1px solid gray;
+	border-radius: 4px;
+}
+
+.poll-title {
+	font-weight: bold;
+}
+
+.poll-time {
+	color: gray;
+	font-size: 12px;
+}
+
+.btn-show {
+	width: 100%;
+	margin-top: 16px;
+	padding: 8px;
+	background: transparent;
+	border: 1px solid green;
+	border-radius: 4px;
+	color: green;
+}
+
+.btn-show:hover {
+	cursor: pointer;
+	background: green;
+	color: white;
+}
