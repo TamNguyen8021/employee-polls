@@ -1,0 +1,58 @@
+.leaderboard-page {
+	margin: 24px 10%;
+}
+
+.leaderboard-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+	padding: 8px;
+	border: 1px solid gray;
+	text-align: left;
+}
+
+.leaderboard-table th {
+	background: whitesmoke;
+}
+
+.leaderboard-table th:first-child {
+	width: 60%;
+}
+
+.leaderboard-table th:nth-child(2),
+.leaderboard-table th:last-child {
+	width: 20%;
+}
+
+.user-info {
+	justify-content: flex-start;
+	gap: 8px;
+}
+
+.leaderboard-table .avatar {
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+}
+
+.leaderboard-table .name {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.leaderboard-table .username {
+	color: gray;
+	font-size: 12px;
+}
+
+.user {
+	align-items: flex-start;
+}
+
+.answer,
+.created {
+	color: gray;
+}
