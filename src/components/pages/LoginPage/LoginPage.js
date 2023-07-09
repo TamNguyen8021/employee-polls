@@ -1,6 +1,8 @@
+import classNames from "classnames";
 import InputField from "components/InputField";
 import SubmitButton from "components/buttons/SubmitButton";
 import { USER, PASSWORD } from "constants";
+import { cssClasses } from "cssClasses";
 import loginDecor from "images/login-decor.jpg";
 
 /**
@@ -10,7 +12,7 @@ const LoginPage = (props) => {
 	return (
 		<div className="login-page">
 			<h1>Employee Polls</h1>
-			<div className="flex">
+			<div className={classNames([cssClasses.flex])}>
 				<img
 					className="login-decor"
 					src={loginDecor}

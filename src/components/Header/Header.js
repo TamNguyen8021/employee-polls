@@ -1,6 +1,7 @@
 import { HOME, LEADERBOARD, NEW, LOGOUT } from "constants";
 import { useState } from "react";
 import classNames from "classnames";
+import { cssClasses } from "cssClasses";
 
 /**
  * @description Represents the navigation header
@@ -14,9 +15,9 @@ const Header = (props) => {
 	};
 
 	return (
-		<div className="flex header">
+		<div className={classNames([cssClasses.flex, "header"])}>
 			<nav>
-				<ul className="flex list-menu">
+				<ul className={classNames([cssClasses.flex, "list-menu"])}>
 					{headers.map((header) => (
 						<li
 							key={header}
