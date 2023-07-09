@@ -1,14 +1,19 @@
-.option {
-	gap: 8px;
+.option-in-poll {
+	width: 45%;
 }
 
-.option-title {
-	font-size: 14px;
-}
-
-.option-field {
+.btn-click {
 	width: 100%;
 	padding: 8px;
-	border: 1px solid gray;
-	border-radius: 4px;
+	background: lightseagreen;
+	border: 1px solid transparent;
+	color: white;
+	font-weight: bold;
+}
+
+.btn-click:hover {
+	cursor: pointer;
+	background: transparent;
+	border: 1px solid lightseagreen;
+	color: lightseagreen;
 }

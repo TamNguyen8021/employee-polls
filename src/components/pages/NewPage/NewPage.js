@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classNames from "classnames";
-import Option from "components/Option";
+import OptionField from "components/OptionField";
 import SubmitButton from "components/buttons/SubmitButton";
 import { cssClasses } from "cssClasses";
 
@@ -28,11 +28,11 @@ const NewPage = () => {
 			<h1 className="title">Would You Rather</h1>
 			<h2 className="sub-title">Create Your Own Poll</h2>
 			<div className={classNames([cssClasses.flexColumn, "option-container"])}>
-				<Option
+				<OptionField
 					isFirst
 					handleChange={handleChangeOptionOne}
 				/>
-				<Option
+				<OptionField
 					isFirst={false}
 					handleChange={handleChangeOptionTwo}
 				/>

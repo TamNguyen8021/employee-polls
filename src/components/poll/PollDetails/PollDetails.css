@@ -1,0 +1,15 @@
+.poll-details {
+	margin: 24px 10%;
+	gap: 16px;
+}
+
+.poll-details .avatar {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+}
+
+.options {
+	width: 100%;
+	justify-content: space-between;
+}
