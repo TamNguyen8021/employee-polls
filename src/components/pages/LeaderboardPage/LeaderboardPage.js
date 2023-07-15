@@ -12,6 +12,17 @@ const LeaderboardPage = () => {
 		dispatch(fetchUsers());
 	}, []);
 
+	const sortUsersByAnsweredAndCreatedQuestions = () => {
+		const tempUsers = [...users];
+
+		return tempUsers.sort(
+			(firstUser, secondUser) =>
+				Object.keys(secondUser.answers).length -
+				Object.keys(firstUser.answers).length +
+				(secondUser.questions.length - firstUser.questions.length),
+		);
+	};
+
 	return (
 		<div className="leaderboard-page">
 			{users.length ? (
@@ -24,7 +35,7 @@ const LeaderboardPage = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{users.map((user) => {
+						{sortUsersByAnsweredAndCreatedQuestions().map((user) => {
 							return (
 								<tr key={user.id}>
 									<td>
