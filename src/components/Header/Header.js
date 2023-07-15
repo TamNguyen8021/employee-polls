@@ -28,8 +28,8 @@ const Header = ({ onClick }) => {
 	const [selectedHeader, setSelectedHeader] = useState(HOME);
 
 	const handleSelectHeader = (header) => {
-		setSelectedHeader(header);
-		navigate(header.path);
+		setSelectedHeader(header.name);
+		navigate(header.path, { state: { id: userId } });
 	};
 
 	return (
@@ -41,7 +41,7 @@ const Header = ({ onClick }) => {
 							key={header.name}
 							className={classNames([
 								"menu-header",
-								{ selected: selectedHeader === header },
+								{ selected: selectedHeader === header.name },
 							])}
 							onClick={() => handleSelectHeader(header)}>
 							{header.name}
