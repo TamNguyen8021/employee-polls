@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Header from "components/Header";
 import HomePage from "components/pages/HomePage";
 import LeaderboardPage from "components/pages/LeaderboardPage";
@@ -19,11 +19,13 @@ import { selectPolls } from "reducers/pollSlice";
 
 const App = () => {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const polls = useSelector(selectPolls);
 	const dispatch = useDispatch();
 
 	const handleLogout = () => {
 		dispatch(logout());
+		navigate(LOGIN_PATH);
 	};
 
 	const filterAnsweredQuestions = () => {
