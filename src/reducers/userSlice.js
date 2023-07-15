@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { _getUsers } from "_DATA";
 
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
 	const response = await _getUsers();
 	return response;
 });
@@ -12,6 +12,7 @@ export const userSlice = createSlice({
 	name: "user",
 	initialState: {
 		isAuthorized: false,
+		users: [],
 	},
 	reducers: {
 		login: (state, action) => {
@@ -32,21 +33,26 @@ export const userSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(fetchUsers.pending, (state, action) => {
-				state.status = "loading";
+				state.users = [];
 			})
 			.addCase(fetchUsers.fulfilled, (state, action) => {
-				state.status = "succeeded";
-				// Add any fetched posts to the array
-				// state.posts = state.posts.concat(action.payload);
+				for (const [key, value] of Object.entries(action.payload)) {
+					const valueIndex = state.users.findIndex((user) => user.id === key);
+					if (valueIndex === -1) {
+						state.users.push(value);
+					} else {
+						state.users[valueIndex] = value;
+					}
+				}
 			})
 			.addCase(fetchUsers.rejected, (state, action) => {
-				state.status = "failed";
-				state.error = action.error.message;
+				state.users = [];
 			});
 	},
 });
 
 export const { login, logout } = userSlice.actions;
 export const selectIsAuthorized = (state) => state.user.isAuthorized;
+export const selectUsers = (state) => state.user.users;
 
 export default userSlice.reducer;

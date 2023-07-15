@@ -1,16 +1,20 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
+import { fetchUsers, selectUsers } from "reducers/userSlice";
 import { cssClasses } from "cssClasses";
 
 const LeaderboardPage = () => {
-	const data = [
-		{ id: 1, name: "A", username: "a", answer: 2, created: 0 },
-		{ id: 2, name: "B", username: "a", answer: 2, created: 0 },
-		{ id: 3, name: "C", username: "a", answer: 2, created: 0 },
-		{ id: 4, name: "D", username: "a", answer: 2, created: 0 },
-	];
+	const dispatch = useDispatch();
+	const users = useSelector(selectUsers);
+
+	useEffect(() => {
+		dispatch(fetchUsers());
+	}, []);
+
 	return (
 		<div className="leaderboard-page">
-			{data?.length ? (
+			{users.length ? (
 				<table className="leaderboard-table">
 					<thead>
 						<tr>
@@ -20,25 +24,25 @@ const LeaderboardPage = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{data.map((user) => {
+						{users.map((user) => {
 							return (
 								<tr key={user.id}>
 									<td>
 										<div className={classNames([cssClasses.flex, "user-info"])}>
 											<img
 												className="avatar"
-												src="https://toquoc.mediacdn.vn/280518851207290880/2022/12/15/p0dnxrcv-16710704848821827978943.jpg"
+												src={user.avatarURL}
 												alt={"Avatar of " + user.name}
 											/>
 											<div
 												className={classNames([cssClasses.flexColumn, "user"])}>
 												<p className="name">{user.name}</p>
-												<p className="username">{user.username}</p>
+												<p className="username">{user.id}</p>
 											</div>
 										</div>
 									</td>
-									<td className="answer">{user.answer}</td>
-									<td className="created">{user.created}</td>
+									<td className="answer">{Object.keys(user.answers).length}</td>
+									<td className="created">{user.questions.length}</td>
 								</tr>
 							);
 						})}
