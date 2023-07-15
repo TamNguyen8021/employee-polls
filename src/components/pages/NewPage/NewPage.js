@@ -1,12 +1,22 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import { createPoll, selectHasErrors } from "reducers/pollSlice";
+import { HOME_PATH } from "constants";
+import { cssClasses } from "cssClasses";
 import OptionField from "components/OptionField";
 import SubmitButton from "components/buttons/SubmitButton";
-import { cssClasses } from "cssClasses";
 
 const NewPage = () => {
+	const dispatch = useDispatch();
+	const location = useLocation();
+	const navigate = useNavigate();
+	const hasErrors = useSelector(selectHasErrors);
 	const [optionOne, setOptionOne] = useState("");
 	const [optionTwo, setOptionTwo] = useState("");
+
+	const userId = location.state.id;
 
 	const handleChangeOptionOne = (event) => {
 		setOptionOne(event?.target?.value);
@@ -23,8 +33,23 @@ const NewPage = () => {
 		);
 	};
 
+	const handleSubmit = () => {
+		dispatch(
+			createPoll({
+				optionOneText: optionOne,
+				optionTwoText: optionTwo,
+				author: userId,
+			}),
+		);
+
+		if (!hasErrors) {
+			navigate(HOME_PATH, { state: { id: userId } });
+		}
+	};
+
 	return (
 		<div className="new-page">
+			{hasErrors ? <p>Some errors occured. Please try again</p> : null}
 			<h1 className="title">Would You Rather</h1>
 			<h2 className="sub-title">Create Your Own Poll</h2>
 			<div className={classNames([cssClasses.flexColumn, "option-container"])}>
@@ -38,7 +63,10 @@ const NewPage = () => {
 				/>
 			</div>
 
-			<SubmitButton disabled={checkIfSubmitButtonDisabled} />
+			<SubmitButton
+				disabled={checkIfSubmitButtonDisabled()}
+				onClick={handleSubmit}
+			/>
 		</div>
 	);
 };
