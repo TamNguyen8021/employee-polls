@@ -31,7 +31,7 @@ const App = () => {
 	const filterAnsweredQuestions = () => {
 		const answeredQuestions = [];
 
-		for (const [, value] of Object.entries(polls)) {
+		for (const value of Object.values(polls)) {
 			if (
 				value.optionOne.votes.includes(location.state?.id) ||
 				value.optionTwo.votes.includes(location.state?.id)
