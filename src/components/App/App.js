@@ -15,13 +15,18 @@ import {
 	POLL_PATH,
 } from "constants";
 import LoginPage from "components/pages/LoginPage";
-import { selectPolls } from "reducers/pollSlice";
+import { fetchPolls, selectPolls } from "reducers/pollSlice";
+import { useEffect } from "react";
 
 const App = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const polls = useSelector(selectPolls);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchPolls());
+	}, []);
 
 	const handleLogout = () => {
 		dispatch(logout());

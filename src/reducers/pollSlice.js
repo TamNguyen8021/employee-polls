@@ -1,15 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { _getQuestions } from "_DATA";
 
-const polls = await _getQuestions();
+export const fetchPolls = createAsyncThunk("poll/fetchPolls", async () => {
+	const response = await _getQuestions();
+	return response;
+});
 
 export const pollSlice = createSlice({
 	name: "poll",
 	initialState: {
-		polls: polls || {},
+		polls: {},
 	},
 	reducers: {
-		createPoll: (state) => {
+		createPoll: (state, action) => {
 			state.value += 1;
 		},
 		decrement: (state) => {
@@ -18,6 +21,20 @@ export const pollSlice = createSlice({
 		incrementByAmount: (state, action) => {
 			state.value += action.payload;
 		},
+	},
+	extraReducers(builder) {
+		builder
+			.addCase(fetchPolls.pending, (state, action) => {
+				state.polls = {};
+			})
+			.addCase(fetchPolls.fulfilled, (state, action) => {
+				for (const [key, value] of Object.entries(action.payload)) {
+					state.polls[key] = value;
+				}
+			})
+			.addCase(fetchPolls.rejected, (state, action) => {
+				state.polls = {};
+			});
 	},
 });
 
