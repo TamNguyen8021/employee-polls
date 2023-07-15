@@ -27,7 +27,7 @@
 	width: 20%;
 }
 
-.user-info {
+.flex.user-info {
 	justify-content: flex-start;
 	gap: 8px;
 }
@@ -48,7 +48,7 @@
 	font-size: 12px;
 }
 
-.user {
+.flex-column.user {
 	align-items: flex-start;
 }
 
