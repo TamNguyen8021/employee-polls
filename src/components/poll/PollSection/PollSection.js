@@ -1,3 +1,4 @@
+import moment from "moment";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import PollOverview from "../PollOverview";
@@ -12,15 +13,19 @@ const PollSection = ({ title, polls }) => {
 			<h1>{title}</h1>
 			{polls?.length ? (
 				<div className={classNames(cssClasses.grid, "poll-section-grid")}>
-					{polls.map((poll) => {
-						return (
-							<PollOverview
-								key={poll.id}
-								title={poll.author}
-								time={poll.timestamp}
-							/>
-						);
-					})}
+					{polls
+						.sort((firstPoll, secondPoll) =>
+							moment(secondPoll.timestamp).diff(moment(firstPoll.timestamp)),
+						)
+						.map((poll) => {
+							return (
+								<PollOverview
+									key={poll.id}
+									title={poll.author}
+									time={poll.timestamp}
+								/>
+							);
+						})}
 				</div>
 			) : null}
 		</div>
