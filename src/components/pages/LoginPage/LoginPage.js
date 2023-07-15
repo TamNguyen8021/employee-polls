@@ -1,14 +1,67 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import { login, selectIsAuthorized } from "reducers/userSlice";
+import { USER, PASSWORD, HOME_PATH } from "constants";
+import { cssClasses } from "cssClasses";
 import InputField from "components/InputField";
 import SubmitButton from "components/buttons/SubmitButton";
-import { USER, PASSWORD } from "constants";
-import { cssClasses } from "cssClasses";
 import loginDecor from "images/login-decor.jpg";
 
 /**
  * @description Represents the login page
  */
-const LoginPage = (props) => {
+const LoginPage = () => {
+	const isAuthorized = useSelector(selectIsAuthorized);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const [id, setId] = useState("");
+	const [password, setPassword] = useState("");
+	const [isSubmitButtonClicked, setIsSubmitButtonClicked] = useState(false);
+
+	const handleChangeId = (event) => {
+		setId(event?.target?.value);
+
+		if (isSubmitButtonClicked) {
+			setIsSubmitButtonClicked(false);
+		}
+	};
+
+	const handleChangePassword = (event) => {
+		setPassword(event?.target?.value);
+
+		if (isSubmitButtonClicked) {
+			setIsSubmitButtonClicked(false);
+		}
+	};
+
+	const checkIfSubmitButtonDisabled = () => {
+		return (
+			!id.replaceAll(" ", "").length || !password.replaceAll(" ", "").length
+		);
+	};
+
+	const clearInputFields = () => {
+		setId("");
+		setPassword("");
+	};
+
+	const handleSubmit = () => {
+		dispatch(
+			login({
+				id: id,
+				password: password,
+			}),
+		);
+		setIsSubmitButtonClicked(true);
+
+		if (isAuthorized) {
+			clearInputFields();
+			navigate(HOME_PATH, { state: { id: id } });
+		}
+	};
+
 	return (
 		<div className="login-page">
 			<h1>Employee Polls</h1>
@@ -21,17 +74,27 @@ const LoginPage = (props) => {
 			</div>
 
 			<h1>Log In</h1>
+			{isSubmitButtonClicked && !isAuthorized ? (
+				<p>Incorrect username or password</p>
+			) : null}
 			<InputField
 				label={USER}
 				isPassword={false}
 				placeholder={USER}
+				value={id}
+				onChange={handleChangeId}
 			/>
 			<InputField
 				label={PASSWORD}
 				isPassword
 				placeholder={PASSWORD}
+				value={password}
+				onChange={handleChangePassword}
 			/>
-			<SubmitButton />
+			<SubmitButton
+				disabled={checkIfSubmitButtonDisabled()}
+				onClick={handleSubmit}
+			/>
 		</div>
 	);
 };
