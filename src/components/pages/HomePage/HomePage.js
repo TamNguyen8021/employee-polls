@@ -1,18 +1,24 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchPolls, selectPolls } from "reducers/pollSlice";
 import PollSection from "components/poll/PollSection";
+import { LOGIN_PATH } from "constants";
 
 /**
  * @description Represents the home page
  */
 const HomePage = () => {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const polls = useSelector(selectPolls);
 
 	useEffect(() => {
+		if (!location.state?.id) {
+			navigate(LOGIN_PATH, { state: { from: location.pathname } });
+		}
+
 		dispatch(fetchPolls());
 	}, []);
 

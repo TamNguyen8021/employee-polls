@@ -14,6 +14,7 @@ import {
 	POLL_PATH,
 } from "constants";
 import LoginPage from "components/pages/LoginPage";
+import NotFoundPage from "components/pages/errors/NotFoundPage";
 
 const App = () => {
 	const location = useLocation();
@@ -47,8 +48,12 @@ const App = () => {
 					element={<LeaderboardPage />}
 				/>
 				<Route
-					path={POLL_PATH + "*"}
+					path={POLL_PATH + ":question_id"}
 					element={<PollDetails />}
+				/>
+				<Route
+					path="*"
+					element={<NotFoundPage />}
 				/>
 			</Routes>
 		</div>

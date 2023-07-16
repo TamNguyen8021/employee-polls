@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { login, selectIsAuthorized } from "reducers/userSlice";
 import { USER, PASSWORD, HOME_PATH } from "constants";
@@ -13,6 +13,7 @@ import loginDecor from "images/login-decor.jpg";
  * @description Represents the login page
  */
 const LoginPage = () => {
+	const location = useLocation();
 	const isAuthorized = useSelector(selectIsAuthorized);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -58,7 +59,9 @@ const LoginPage = () => {
 
 		if (isAuthorized) {
 			clearInputFields();
-			navigate(HOME_PATH, { state: { id: id } });
+			navigate(location.state?.from ? location.state.from : HOME_PATH, {
+				state: { id: id },
+			});
 		}
 	};
 

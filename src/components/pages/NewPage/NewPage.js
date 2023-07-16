@@ -1,22 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { createPoll, selectHasErrors } from "reducers/pollSlice";
-import { HOME_PATH } from "constants";
+import { HOME_PATH, LOGIN_PATH } from "constants";
 import { cssClasses } from "cssClasses";
 import OptionField from "components/OptionField";
 import SubmitButton from "components/buttons/SubmitButton";
 
 const NewPage = () => {
-	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const hasErrors = useSelector(selectHasErrors);
 	const [optionOne, setOptionOne] = useState("");
 	const [optionTwo, setOptionTwo] = useState("");
 
-	const userId = location.state.id;
+	useEffect(() => {
+		if (!location.state?.id) {
+			navigate(LOGIN_PATH, { state: { from: location.pathname } });
+		}
+	});
+
+	const userId = location.state?.id;
 
 	const handleChangeOptionOne = (event) => {
 		setOptionOne(event?.target?.value);
