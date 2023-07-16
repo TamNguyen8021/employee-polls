@@ -13,6 +13,7 @@ export const userSlice = createSlice({
 	initialState: {
 		isAuthorized: false,
 		users: [],
+		isUserDataLoading: true,
 	},
 	reducers: {
 		login: (state, action) => {
@@ -33,9 +34,11 @@ export const userSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(fetchUsers.pending, (state, action) => {
+				state.isUserDataLoading = true;
 				state.users = [];
 			})
 			.addCase(fetchUsers.fulfilled, (state, action) => {
+				state.isUserDataLoading = false;
 				for (const [key, value] of Object.entries(action.payload)) {
 					const valueIndex = state.users.findIndex((user) => user.id === key);
 					if (valueIndex === -1) {
@@ -46,13 +49,17 @@ export const userSlice = createSlice({
 				}
 			})
 			.addCase(fetchUsers.rejected, (state, action) => {
+				state.isUserDataLoading = false;
 				state.users = [];
 			});
 	},
 });
 
 export const { login, logout } = userSlice.actions;
+export const selectIsUserDataLoading = (state) => state.user.isUserDataLoading;
 export const selectIsAuthorized = (state) => state.user.isAuthorized;
 export const selectUsers = (state) => state.user.users;
+export const selectUserById = (state, userId) =>
+	state.user.users.find((user) => user.id === userId);
 
 export default userSlice.reducer;

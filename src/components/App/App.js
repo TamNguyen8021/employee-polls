@@ -47,23 +47,10 @@ const App = () => {
 					element={<LeaderboardPage />}
 				/>
 				<Route
-					path={POLL_PATH}
-					element={
-						<PollDetails
-							username={"avc"}
-							avatar={
-								"https://toquoc.mediacdn.vn/280518851207290880/2022/12/15/p0dnxrcv-16710704848821827978943.jpg"
-							}
-						/>
-					}
+					path={POLL_PATH + "*"}
+					element={<PollDetails username={location.state?.id} />}
 				/>
 			</Routes>
-			{/* <PollDetails
-				username={"avc"}
-				avatar={
-					"https://toquoc.mediacdn.vn/280518851207290880/2022/12/15/p0dnxrcv-16710704848821827978943.jpg"
-				}
-			/> */}
 		</div>
 	);
 };

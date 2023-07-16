@@ -1,11 +1,23 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import classNames from "classnames";
+import PropTypes from "prop-types";
+import { POLL_PATH } from "constants";
 import { cssClasses } from "cssClasses";
 
 /**
  * @description Represents the poll shown on home page
  */
-const PollOverview = ({ title, time }) => {
+const PollOverview = ({ title, time, pollId }) => {
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	const handleShowPoll = () => {
+		navigate(POLL_PATH + pollId, {
+			state: { id: location.state.id, pollId: pollId },
+		});
+	};
+
 	return (
 		<div className={classNames(cssClasses.flexColumn, "poll-overview")}>
 			<p className="poll-title">{title}</p>
@@ -14,9 +26,16 @@ const PollOverview = ({ title, time }) => {
 				className="btn-show"
 				type="button"
 				value="Show"
+				onClick={handleShowPoll}
 			/>
 		</div>
 	);
+};
+
+PollOverview.propTypes = {
+	title: PropTypes.string.isRequired,
+	time: PropTypes.number.isRequired,
+	pollId: PropTypes.string.isRequired,
 };
 
 export default PollOverview;

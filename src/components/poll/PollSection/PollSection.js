@@ -23,6 +23,7 @@ const PollSection = ({ title, polls }) => {
 									key={poll.id}
 									title={poll.author}
 									time={poll.timestamp}
+									pollId={poll.id}
 								/>
 							);
 						})}

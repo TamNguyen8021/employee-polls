@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import PropTypes from "prop-types";
 import { cssClasses } from "cssClasses";
 
 const Option = ({ content }) => {
@@ -12,6 +13,10 @@ const Option = ({ content }) => {
 			/>
 		</div>
 	);
+};
+
+Option.propTypes = {
+	content: PropTypes.string.isRequired,
 };
 
 export default Option;
