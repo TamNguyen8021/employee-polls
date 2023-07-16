@@ -41,7 +41,7 @@ const Header = ({ onClick }) => {
 							key={header.name}
 							className={classNames([
 								"menu-header",
-								{ selected: selectedHeader === header.name },
+								/*{ selected: selectedHeader === header.name },*/
 							])}
 							onClick={() => handleSelectHeader(header)}>
 							{header.name}
