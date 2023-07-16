@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
@@ -20,6 +20,15 @@ const LoginPage = () => {
 	const [id, setId] = useState("");
 	const [password, setPassword] = useState("");
 	const [isSubmitButtonClicked, setIsSubmitButtonClicked] = useState(false);
+
+	useEffect(() => {
+		if (isAuthorized) {
+			clearInputFields();
+			navigate(location.state?.from ? location.state.from : HOME_PATH, {
+				state: { id: id },
+			});
+		}
+	}, [isAuthorized]);
 
 	const handleChangeId = (event) => {
 		setId(event?.target?.value);
@@ -56,13 +65,6 @@ const LoginPage = () => {
 			}),
 		);
 		setIsSubmitButtonClicked(true);
-
-		if (isAuthorized) {
-			clearInputFields();
-			navigate(location.state?.from ? location.state.from : HOME_PATH, {
-				state: { id: id },
-			});
-		}
 	};
 
 	return (
