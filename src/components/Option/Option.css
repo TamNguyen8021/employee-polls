@@ -18,3 +18,13 @@
 	border: 1px solid lightseagreen;
 	color: lightseagreen;
 }
+
+.btn-click.disabled {
+	background: transparent;
+	color: gray;
+}
+
+.btn-click.disabled:hover {
+	cursor: default;
+	border: 1px solid transparent;
+}

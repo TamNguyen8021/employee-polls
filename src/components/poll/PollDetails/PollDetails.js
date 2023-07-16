@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import CircleLoader from "react-spinners/CircleLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import {
 	fetchPolls,
 	selectIsPollDataLoading,
@@ -36,7 +35,7 @@ const PollDetails = () => {
 	}, []);
 
 	if (isUserDataLoading || isPollDataLoading) {
-		return <CircleLoader loading={isUserDataLoading || isPollDataLoading} />;
+		return <ClipLoader loading={isUserDataLoading || isPollDataLoading} />;
 	}
 
 	return (
