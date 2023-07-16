@@ -17,7 +17,7 @@ import {
 import { cssClasses } from "cssClasses";
 import Option from "components/Option";
 
-const PollDetails = ({ username }) => {
+const PollDetails = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const isPollDataLoading = useSelector(selectIsPollDataLoading);
@@ -25,7 +25,10 @@ const PollDetails = ({ username }) => {
 	const poll = useSelector((state) =>
 		selectPollById(state, location.state.pollId),
 	);
-	const user = useSelector((state) => selectUserById(state, username));
+	const user = useSelector((state) => selectUserById(state, poll?.author));
+
+	const userId = location.state.id;
+	const isAnswered = location.state.isAnswered;
 
 	useEffect(() => {
 		dispatch(fetchUsers());
@@ -38,23 +41,27 @@ const PollDetails = ({ username }) => {
 
 	return (
 		<div className={classNames([cssClasses.flexColumn, "poll-details"])}>
-			<h1>Poll by {username}</h1>
+			<h1>Poll by {user.id}</h1>
 			<img
 				className="avatar"
 				src={user.avatarURL}
-				alt={"Avatar of " + username}
+				alt={"Avatar of " + user.id}
 			/>
 			<h2>Would You Rather</h2>
 			<div className={classNames([cssClasses.flex, "options"])}>
-				<Option content={poll.optionOne.text} />
-				<Option content={poll.optionTwo.text} />
+				<Option
+					content={poll.optionOne.text}
+					isSelected={poll.optionOne.votes.includes(userId)}
+					isAnswered={isAnswered}
+				/>
+				<Option
+					content={poll.optionTwo.text}
+					isSelected={poll.optionTwo.votes.includes(userId)}
+					isAnswered={isAnswered}
+				/>
 			</div>
 		</div>
 	);
-};
-
-PollDetails.propTypes = {
-	username: PropTypes.string,
 };
 
 export default PollDetails;

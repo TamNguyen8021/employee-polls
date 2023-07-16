@@ -48,7 +48,7 @@ const App = () => {
 				/>
 				<Route
 					path={POLL_PATH + "*"}
-					element={<PollDetails username={location.state?.id} />}
+					element={<PollDetails />}
 				/>
 			</Routes>
 		</div>
