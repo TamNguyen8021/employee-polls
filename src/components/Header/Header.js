@@ -1,6 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import classNames from "classnames";
 import { PropTypes } from "prop-types";
+import {
+	fetchUsers,
+	selectIsUserDataLoading,
+	selectUserById,
+} from "reducers/userSlice";
 import {
 	HOME,
 	LEADERBOARD,
@@ -10,7 +18,6 @@ import {
 	LEADERBOARD_PATH,
 	NEW_PATH,
 } from "constants";
-import classNames from "classnames";
 import { cssClasses } from "cssClasses";
 
 /**
@@ -19,18 +26,29 @@ import { cssClasses } from "cssClasses";
 const Header = ({ onClick }) => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const userId = location.state.id;
+	const dispatch = useDispatch();
+	const user = useSelector((state) => selectUserById(state, location.state.id));
+	const isUserDataLoading = useSelector(selectIsUserDataLoading);
+	const [selectedHeader, setSelectedHeader] = useState(HOME);
+
 	const headers = [
 		{ name: HOME, path: HOME_PATH },
 		{ name: LEADERBOARD, path: LEADERBOARD_PATH },
 		{ name: NEW, path: NEW_PATH },
 	];
-	const [selectedHeader, setSelectedHeader] = useState(HOME);
+
+	useEffect(() => {
+		dispatch(fetchUsers());
+	}, []);
 
 	const handleSelectHeader = (header) => {
 		setSelectedHeader(header.name);
-		navigate(header.path, { state: { id: userId } });
+		navigate(header.path, { state: { id: user.id } });
 	};
+
+	if (isUserDataLoading) {
+		return <ClipLoader loading={isUserDataLoading} />;
+	}
 
 	return (
 		<div className={classNames([cssClasses.flex, "header"])}>
@@ -53,12 +71,10 @@ const Header = ({ onClick }) => {
 				<div className={classNames([cssClasses.flex, "user-overview"])}>
 					<img
 						className="user-avatar"
-						src={
-							"https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortRound&accessoriesType=Round&hairColor=Auburn&facialHairType=BeardLight&facialHairColor=BlondeGolden&clotheType=BlazerShirt&eyeType=Wink&eyebrowType=Angry&mouthType=Default&skinColor=Tanned"
-						}
-						alt={"Avatar of " + userId}
+						src={user.avatarURL}
+						alt={"Avatar of " + user.id}
 					/>
-					<span className="user-id">{userId}</span>
+					<span className="user-id">{user.id}</span>
 				</div>
 				<input
 					className="btn-logout"
