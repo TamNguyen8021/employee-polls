@@ -28,3 +28,7 @@
 	cursor: default;
 	border: 1px solid transparent;
 }
+
+.option-in-poll .votes {
+	font-size: 14px;
+}

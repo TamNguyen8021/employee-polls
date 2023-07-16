@@ -12,6 +12,7 @@ import {
 	fetchUsers,
 	selectIsUserDataLoading,
 	selectUserById,
+	selectUsers,
 } from "reducers/userSlice";
 import { cssClasses } from "cssClasses";
 import Option from "components/Option";
@@ -25,6 +26,7 @@ const PollDetails = () => {
 		selectPollById(state, location.state.pollId),
 	);
 	const user = useSelector((state) => selectUserById(state, poll?.author));
+	const users = useSelector(selectUsers);
 
 	const userId = location.state.id;
 	const isAnswered = location.state.isAnswered;
@@ -52,11 +54,15 @@ const PollDetails = () => {
 					content={poll.optionOne.text}
 					isSelected={poll.optionOne.votes.includes(userId)}
 					isAnswered={isAnswered}
+					noOfVotes={poll.optionOne.votes.length}
+					noOfUsers={users.length}
 				/>
 				<Option
 					content={poll.optionTwo.text}
 					isSelected={poll.optionTwo.votes.includes(userId)}
 					isAnswered={isAnswered}
+					noOfVotes={poll.optionTwo.votes.length}
+					noOfUsers={users.length}
 				/>
 			</div>
 		</div>
