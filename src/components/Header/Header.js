@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
@@ -29,7 +29,6 @@ const Header = ({ onClick }) => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => selectUserById(state, location.state.id));
 	const isUserDataLoading = useSelector(selectIsUserDataLoading);
-	const [selectedHeader, setSelectedHeader] = useState(HOME);
 
 	const headers = [
 		{ name: HOME, path: HOME_PATH },
@@ -42,7 +41,6 @@ const Header = ({ onClick }) => {
 	}, []);
 
 	const handleSelectHeader = (header) => {
-		setSelectedHeader(header.name);
 		navigate(header.path, { state: { id: user.id } });
 	};
 
@@ -57,10 +55,7 @@ const Header = ({ onClick }) => {
 					{headers.map((header) => (
 						<li
 							key={header.name}
-							className={classNames([
-								"menu-header",
-								/*{ selected: selectedHeader === header.name },*/
-							])}
+							className={classNames(["menu-header"])}
 							onClick={() => handleSelectHeader(header)}>
 							{header.name}
 						</li>
