@@ -54,6 +54,7 @@ const Header = ({ onClick }) => {
 				<ul className={classNames([cssClasses.flex, "list-menu"])}>
 					{headers.map((header) => (
 						<li
+							data-test-id={header.name}
 							key={header.name}
 							className={classNames(["menu-header"])}
 							onClick={() => handleSelectHeader(header)}>

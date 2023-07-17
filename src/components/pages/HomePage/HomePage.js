@@ -50,7 +50,9 @@ const HomePage = () => {
 	};
 
 	return (
-		<div className="home-page">
+		<div
+			data-test-id="home-page"
+			className="home-page">
 			<PollSection
 				title="New Questions"
 				polls={filterUnansweredQuestions()}
