@@ -24,7 +24,6 @@ const PollSection = ({ title, polls }) => {
 									title={poll.author}
 									time={poll.timestamp}
 									pollId={poll.id}
-									isAnswered={title === "Done"}
 								/>
 							);
 						})}

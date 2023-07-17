@@ -1,14 +1,35 @@
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import { fetchPolls, votePoll } from "reducers/pollSlice";
+import { fetchUsers } from "reducers/userSlice";
 import { cssClasses } from "cssClasses";
 
 const Option = ({
+	pollId,
+	isFirst = true,
 	content,
 	isSelected = false,
 	isAnswered = false,
 	noOfVotes,
 	noOfUsers,
 }) => {
+	const location = useLocation();
+	const dispatch = useDispatch();
+
+	const handleSelectOption = () => {
+		dispatch(
+			votePoll({
+				authedUser: location.state.id,
+				qid: pollId,
+				answer: isFirst ? "optionOne" : "optionTwo",
+			}),
+		);
+		dispatch(fetchPolls());
+		dispatch(fetchUsers());
+	};
+
 	const renderUI = () => {
 		if (!isAnswered) {
 			return (
@@ -16,6 +37,7 @@ const Option = ({
 					className="btn-click"
 					type="button"
 					value="Click"
+					onClick={handleSelectOption}
 				/>
 			);
 		}
@@ -45,6 +67,8 @@ const Option = ({
 };
 
 Option.propTypes = {
+	pollId: PropTypes.string,
+	isFirst: PropTypes.bool.isRequired,
 	content: PropTypes.string.isRequired,
 	isSelected: PropTypes.bool.isRequired,
 	isAnswered: PropTypes.bool.isRequired,

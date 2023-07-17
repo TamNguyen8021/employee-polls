@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { _getQuestions, _saveQuestion } from "_DATA";
+import { _getQuestions, _saveQuestion, _saveQuestionAnswer } from "_DATA";
 
 export const fetchPolls = createAsyncThunk("poll/fetchPolls", async () => {
 	const response = await _getQuestions();
@@ -10,6 +10,14 @@ export const createPoll = createAsyncThunk(
 	"poll/createPoll",
 	async (question) => {
 		const response = await _saveQuestion(question);
+		return response;
+	},
+);
+
+export const votePoll = createAsyncThunk(
+	"poll/votePoll",
+	async ({ authedUser, qid, answer }) => {
+		const response = await _saveQuestionAnswer({ authedUser, qid, answer });
 		return response;
 	},
 );
@@ -52,11 +60,22 @@ export const pollSlice = createSlice({
 			.addCase(createPoll.rejected, (state, action) => {
 				state.isPollDataLoading = false;
 				state.hasErrors = true;
+			})
+			.addCase(votePoll.pending, (state, action) => {
+				state.isPollDataLoading = true;
+				state.hasErrors = false;
+			})
+			.addCase(votePoll.fulfilled, (state, action) => {
+				state.isPollDataLoading = false;
+				state.hasErrors = false;
+			})
+			.addCase(votePoll.rejected, (state, action) => {
+				state.isPollDataLoading = false;
+				state.hasErrors = true;
 			});
 	},
 });
 
-// export const { } = pollSlice.actions;
 export const selectIsPollDataLoading = (state) => state.poll.isPollDataLoading;
 export const selectPolls = (state) => state.poll.polls;
 export const selectPollById = (state, pollId) => {

@@ -11,4 +11,5 @@ export const HOME_PATH = "/home";
 export const LEADERBOARD_PATH = "/leaderboard";
 export const LOGIN_PATH = "/";
 export const NEW_PATH = "/add";
+export const NOT_FOUND_PATH = "/404";
 export const POLL_PATH = "/questions/";
