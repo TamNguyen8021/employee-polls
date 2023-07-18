@@ -38,21 +38,21 @@ const PollDetails = () => {
 	useEffect(() => {
 		if (!location.state?.id) {
 			navigate(LOGIN_PATH, { state: { from: location.pathname } });
-		} else {
-			dispatch(fetchPolls());
+		}
 
-			if (poll?.id) {
-				dispatch(fetchUsers());
-			}
+		dispatch(fetchPolls());
+
+		if (location.state?.id && !poll?.id) {
+			navigate(NOT_FOUND_PATH);
+		}
+
+		if (poll?.id) {
+			dispatch(fetchUsers());
 		}
 	}, []);
 
 	if (isUserDataLoading || isPollDataLoading) {
 		return <ClipLoader loading={isUserDataLoading || isPollDataLoading} />;
-	}
-
-	if (!poll?.id) {
-		navigate(NOT_FOUND_PATH);
 	}
 
 	const checkIfUserAnsweredPoll = () => {
