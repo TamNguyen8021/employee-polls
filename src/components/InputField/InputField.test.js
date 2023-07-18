@@ -1,9 +1,5 @@
-const {
-	render,
-	getByTestId,
-	screen,
-	fireEvent,
-} = require("@testing-library/react");
+const { render, screen, fireEvent } = require("@testing-library/react");
+const ReactTestRenderer = require("react-test-renderer");
 const { default: InputField } = require("./InputField");
 
 describe("InputField component", () => {
@@ -72,5 +68,18 @@ describe("InputField component", () => {
 
 		expect(inputField).toBeInTheDocument();
 		expect(inputField.value).toEqual("test");
+	});
+});
+
+describe("InputField Snapshot", () => {
+	test("should matches DOM snapshots", () => {
+		const props = {
+			onChange: jest.fn(),
+		};
+		const domTree = ReactTestRenderer.create(
+			<InputField {...props} />,
+		).toJSON();
+
+		expect(domTree).toMatchSnapshot();
 	});
 });
