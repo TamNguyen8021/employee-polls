@@ -6,27 +6,28 @@ export const fetchUsers = createAsyncThunk("user/fetchUsers", async () => {
 	return response;
 });
 
-const users = await _getUsers();
+export const login = createAsyncThunk(
+	"user/login",
+	async ({ id, password }) => {
+		const response = await _getUsers();
+
+		for (const value of Object.values(response)) {
+			if (value?.id === id && value?.password === password) {
+				return true;
+			}
+		}
+		return false;
+	},
+);
 
 export const userSlice = createSlice({
 	name: "user",
 	initialState: {
 		isAuthorized: false,
 		users: [],
-		isUserDataLoading: true,
+		isUserDataLoading: false,
 	},
 	reducers: {
-		login: (state, action) => {
-			const user = users[action.payload.id];
-
-			if (
-				user?.id === action.payload.id &&
-				user?.password === action.payload.password
-			) {
-				state.isAuthorized = true;
-			}
-		},
-
 		logout: (state) => {
 			state.isAuthorized = false;
 		},
@@ -51,11 +52,26 @@ export const userSlice = createSlice({
 			.addCase(fetchUsers.rejected, (state, action) => {
 				state.isUserDataLoading = false;
 				state.users = [];
+			})
+			.addCase(login.pending, (state, action) => {
+				state.isUserDataLoading = true;
+				state.isAuthorized = false;
+			})
+			.addCase(login.fulfilled, (state, action) => {
+				state.isUserDataLoading = false;
+
+				if (action.payload) {
+					state.isAuthorized = true;
+				}
+			})
+			.addCase(login.rejected, (state, action) => {
+				state.isUserDataLoading = false;
+				state.isAuthorized = false;
 			});
 	},
 });
 
-export const { login, logout } = userSlice.actions;
+export const { logout } = userSlice.actions;
 export const selectIsUserDataLoading = (state) => state.user.isUserDataLoading;
 export const selectIsAuthorized = (state) => state.user.isAuthorized;
 export const selectUsers = (state) => state.user.users;

@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 import classNames from "classnames";
-import { login, selectIsAuthorized } from "reducers/userSlice";
+import {
+	login,
+	selectIsAuthorized,
+	selectIsUserDataLoading,
+} from "reducers/userSlice";
 import { USER, PASSWORD, HOME_PATH } from "constants";
 import { cssClasses } from "cssClasses";
 import InputField from "components/InputField";
@@ -15,6 +20,7 @@ import loginDecor from "images/login-decor.jpg";
 const LoginPage = () => {
 	const location = useLocation();
 	const isAuthorized = useSelector(selectIsAuthorized);
+	const isUserDataLoading = useSelector(selectIsUserDataLoading);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [id, setId] = useState("");
@@ -66,6 +72,10 @@ const LoginPage = () => {
 		);
 		setIsSubmitButtonClicked(true);
 	};
+
+	if (isUserDataLoading) {
+		return <ClipLoader loading={isUserDataLoading} />;
+	}
 
 	return (
 		<div className="login-page">

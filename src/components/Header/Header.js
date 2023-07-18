@@ -27,7 +27,9 @@ const Header = ({ onClick }) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const user = useSelector((state) => selectUserById(state, location.state.id));
+	const user = useSelector((state) =>
+		selectUserById(state, location.state?.id),
+	);
 	const isUserDataLoading = useSelector(selectIsUserDataLoading);
 
 	const headers = [
@@ -41,7 +43,7 @@ const Header = ({ onClick }) => {
 	}, []);
 
 	const handleSelectHeader = (header) => {
-		navigate(header.path, { state: { id: user.id } });
+		navigate(header.path, { state: { id: user?.id } });
 	};
 
 	if (isUserDataLoading) {
@@ -67,10 +69,10 @@ const Header = ({ onClick }) => {
 				<div className={classNames([cssClasses.flex, "user-overview"])}>
 					<img
 						className="user-avatar"
-						src={user.avatarURL}
-						alt={"Avatar of " + user.id}
+						src={user?.avatarURL}
+						alt={"Avatar of " + user?.id}
 					/>
-					<span className="user-id">{user.id}</span>
+					<span className="user-id">{user?.id}</span>
 				</div>
 				<input
 					className="btn-logout"

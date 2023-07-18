@@ -21,7 +21,7 @@ const Option = ({
 	const handleSelectOption = () => {
 		dispatch(
 			votePoll({
-				authedUser: location.state.id,
+				authedUser: location.state?.id,
 				qid: pollId,
 				answer: isFirst ? "optionOne" : "optionTwo",
 			}),

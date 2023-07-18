@@ -45,18 +45,18 @@ const LeaderboardPage = () => {
 					<tbody>
 						{sortUsersByAnsweredAndCreatedQuestions().map((user) => {
 							return (
-								<tr key={user.id}>
+								<tr key={user?.id}>
 									<td>
 										<div className={classNames([cssClasses.flex, "user-info"])}>
 											<img
 												className="avatar"
-												src={user.avatarURL}
+												src={user?.avatarURL}
 												alt={"Avatar of " + user.name}
 											/>
 											<div
 												className={classNames([cssClasses.flexColumn, "user"])}>
 												<p className="name">{user.name}</p>
-												<p className="username">{user.id}</p>
+												<p className="username">{user?.id}</p>
 											</div>
 										</div>
 									</td>

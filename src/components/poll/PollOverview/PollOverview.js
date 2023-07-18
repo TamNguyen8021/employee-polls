@@ -14,7 +14,7 @@ const PollOverview = ({ title, time, pollId }) => {
 
 	const handleShowPoll = () => {
 		navigate(POLL_PATH + pollId, {
-			state: { id: location.state.id, pollId: pollId },
+			state: { id: location.state?.id, pollId: pollId },
 		});
 	};
 
