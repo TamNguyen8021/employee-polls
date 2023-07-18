@@ -9,8 +9,15 @@ const InputField = ({
 }) => {
 	return (
 		<div className="input-field">
-			{label ? <label className="label">{label}</label> : null}
+			{label ? (
+				<label
+					data-testid="input-field-label"
+					className="label">
+					{label}
+				</label>
+			) : null}
 			<input
+				data-testid="input-field"
 				className="field"
 				type={isPassword ? "password" : "text"}
 				placeholder={placeholder}
