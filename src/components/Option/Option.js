@@ -69,9 +69,9 @@ const Option = ({
 Option.propTypes = {
 	pollId: PropTypes.string,
 	isFirst: PropTypes.bool.isRequired,
-	content: PropTypes.string.isRequired,
-	isSelected: PropTypes.bool.isRequired,
-	isAnswered: PropTypes.bool.isRequired,
+	content: PropTypes.string,
+	isSelected: PropTypes.bool,
+	isAnswered: PropTypes.bool,
 	noOfVotes: PropTypes.number,
 	noOfUsers: PropTypes.number,
 };
