@@ -22,6 +22,9 @@ const HomePage = () => {
 			navigate(LOGIN_PATH, { state: { from: HOME_PATH } });
 		}
 
+		sessionStorage.removeItem("pollId");
+		sessionStorage.removeItem("pollTime");
+
 		dispatch(fetchPolls());
 	}, []);
 

@@ -29,6 +29,7 @@ const LoginPage = () => {
 
 	useEffect(() => {
 		sessionStorage.removeItem("pollId");
+		sessionStorage.removeItem("pollTime");
 
 		if (isAuthorized) {
 			clearInputFields();

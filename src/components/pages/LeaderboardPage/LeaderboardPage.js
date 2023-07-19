@@ -17,6 +17,9 @@ const LeaderboardPage = () => {
 			navigate(LOGIN_PATH, { state: { from: LEADERBOARD_PATH } });
 		}
 
+		sessionStorage.removeItem("pollId");
+		sessionStorage.removeItem("pollTime");
+
 		dispatch(fetchUsers());
 	}, []);
 

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import moment from "moment";
 import classNames from "classnames";
 import {
 	fetchPolls,
@@ -33,6 +34,9 @@ const PollDetails = () => {
 	const user = useSelector((state) => selectUserById(state, poll?.author));
 	const users = useSelector(selectUsers);
 
+	const pollTime = sessionStorage.getItem("pollTime")
+		? moment(parseInt(sessionStorage.getItem("pollTime")))
+		: moment("1970-01-01");
 	const userId = location.state?.id;
 	let pollId = sessionStorage.getItem("pollId");
 
@@ -43,13 +47,17 @@ const PollDetails = () => {
 
 		dispatch(fetchPolls());
 
-		if (location.state?.id && !pollId && !poll?.id) {
+		if (
+			pollTime.isSame(moment(), "day") ||
+			(location.state?.id && !pollId && !poll?.id)
+		) {
 			navigate(NOT_FOUND_PATH, { state: { id: location.state?.id } });
 		}
 
 		if (poll?.id) {
 			dispatch(fetchUsers());
 			sessionStorage.setItem("pollId", poll.id);
+			sessionStorage.setItem("pollTime", poll.timestamp);
 		}
 	}, []);
 

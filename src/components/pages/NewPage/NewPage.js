@@ -20,6 +20,9 @@ const NewPage = () => {
 		if (!location.state?.id) {
 			navigate(LOGIN_PATH, { state: { from: NEW_PATH } });
 		}
+
+		sessionStorage.removeItem("pollId");
+		sessionStorage.removeItem("pollTime");
 	});
 
 	const userId = location.state?.id;
