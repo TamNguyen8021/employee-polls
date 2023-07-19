@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { logout } from "reducers/userSlice";
 import Header from "components/Header";
 import HomePage from "components/pages/HomePage";
 import LeaderboardPage from "components/pages/LeaderboardPage";
 import NewPage from "components/pages/NewPage";
 import PollDetails from "components/poll/PollDetails";
-import { logout, selectIsAuthorized } from "reducers/userSlice";
 import {
 	HOME_PATH,
 	LEADERBOARD_PATH,
@@ -17,9 +17,9 @@ import LoginPage from "components/pages/LoginPage";
 import NotFoundPage from "components/pages/errors/NotFoundPage";
 
 const App = () => {
+	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const isAuthorized = useSelector(selectIsAuthorized);
 
 	const handleLogout = () => {
 		dispatch(logout());
@@ -28,7 +28,7 @@ const App = () => {
 
 	return (
 		<div className="App">
-			{isAuthorized ? <Header onClick={handleLogout} /> : null}
+			{location.state?.id ? <Header onClick={handleLogout} /> : null}
 			<Routes>
 				<Route
 					exact
