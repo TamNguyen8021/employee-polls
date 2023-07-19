@@ -30,7 +30,7 @@ const HomePage = () => {
 
 	const toggleChange = () => {
 		setIsShowUnansweredPolls(!isShowUnansweredPolls);
-	}
+	};
 
 	const filterAnsweredQuestions = () => {
 		const answeredQuestions = [];
@@ -80,14 +80,18 @@ const HomePage = () => {
 				/>
 				<label>Answered questions</label>
 			</div>
-			{isShowUnansweredPolls ? <PollSection
-				title="New Questions"
-				polls={filterUnansweredQuestions()}
-			/> : null}
-			{!isShowUnansweredPolls ? <PollSection
-				title="Done"
-				polls={filterAnsweredQuestions()}
-			/> : null}
+			{isShowUnansweredPolls ? (
+				<PollSection
+					title="New Questions"
+					polls={filterUnansweredQuestions()}
+				/>
+			) : null}
+			{!isShowUnansweredPolls ? (
+				<PollSection
+					title="Done"
+					polls={filterAnsweredQuestions()}
+				/>
+			) : null}
 		</div>
 	);
 };
