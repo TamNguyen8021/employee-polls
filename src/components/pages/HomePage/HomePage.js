@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { fetchPolls, selectPolls } from "reducers/pollSlice";
 import PollSection from "components/poll/PollSection";
-import { LOGIN_PATH } from "constants";
+import { HOME_PATH, LOGIN_PATH } from "constants";
 import { cssClasses } from "cssClasses";
 
 /**
@@ -19,7 +19,7 @@ const HomePage = () => {
 
 	useEffect(() => {
 		if (!location.state?.id) {
-			navigate(LOGIN_PATH, { state: { from: location.pathname } });
+			navigate(LOGIN_PATH, { state: { from: HOME_PATH } });
 		}
 
 		dispatch(fetchPolls());
