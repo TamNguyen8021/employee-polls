@@ -28,6 +28,8 @@ const LoginPage = () => {
 	const [isSubmitButtonClicked, setIsSubmitButtonClicked] = useState(false);
 
 	useEffect(() => {
+		sessionStorage.removeItem("pollId");
+
 		if (isAuthorized) {
 			clearInputFields();
 			navigate(location.state?.from ? location.state.from : HOME_PATH, {

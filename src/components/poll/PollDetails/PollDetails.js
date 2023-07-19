@@ -34,6 +34,7 @@ const PollDetails = () => {
 	const users = useSelector(selectUsers);
 
 	const userId = location.state?.id;
+	let pollId = sessionStorage.getItem("pollId");
 
 	useEffect(() => {
 		if (!location.state?.id) {
@@ -42,12 +43,13 @@ const PollDetails = () => {
 
 		dispatch(fetchPolls());
 
-		if (location.state?.id && !poll?.id) {
-			navigate(NOT_FOUND_PATH, {state: { id: location.state?.id }});
+		if (location.state?.id && !pollId && !poll?.id) {
+			navigate(NOT_FOUND_PATH, { state: { id: location.state?.id } });
 		}
 
 		if (poll?.id) {
 			dispatch(fetchUsers());
+			sessionStorage.setItem("pollId", poll.id);
 		}
 	}, []);
 
@@ -73,7 +75,7 @@ const PollDetails = () => {
 			<h2>Would You Rather</h2>
 			<div className={classNames([cssClasses.flex, "options"])}>
 				<Option
-					pollId={poll?.id}
+					pollId={pollId}
 					isFirst
 					content={poll?.optionOne.text}
 					isSelected={poll?.optionOne.votes.includes(userId)}
@@ -82,7 +84,7 @@ const PollDetails = () => {
 					noOfUsers={users.length}
 				/>
 				<Option
-					pollId={poll?.id}
+					pollId={pollId}
 					isFirst={false}
 					content={poll?.optionTwo.text}
 					isSelected={poll?.optionTwo.votes.includes(userId)}
