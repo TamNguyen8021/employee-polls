@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { createPoll, selectHasErrors } from "reducers/pollSlice";
+import { selectIsAuthorized } from "reducers/userSlice";
 import { HOME_PATH, LOGIN_PATH } from "constants";
 import { cssClasses } from "cssClasses";
 import OptionField from "components/OptionField";
@@ -11,13 +12,14 @@ import SubmitButton from "components/buttons/SubmitButton";
 const NewPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const isAuthorized = useSelector(selectIsAuthorized);
 	const dispatch = useDispatch();
 	const hasErrors = useSelector(selectHasErrors);
 	const [optionOne, setOptionOne] = useState("");
 	const [optionTwo, setOptionTwo] = useState("");
 
 	useEffect(() => {
-		if (!location.state?.id) {
+		if (!isAuthorized) {
 			navigate(LOGIN_PATH, { state: { from: location.pathname } });
 		}
 	});
