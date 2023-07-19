@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { fetchUsers, selectUsers } from "reducers/userSlice";
-import { LOGIN_PATH } from "constants";
+import { LEADERBOARD_PATH, LOGIN_PATH } from "constants";
 import { cssClasses } from "cssClasses";
 
 const LeaderboardPage = () => {
@@ -14,7 +14,7 @@ const LeaderboardPage = () => {
 
 	useEffect(() => {
 		if (!location.state?.id) {
-			navigate(LOGIN_PATH, { state: { from: location.pathname } });
+			navigate(LOGIN_PATH, { state: { from: LEADERBOARD_PATH } });
 		}
 
 		dispatch(fetchUsers());
