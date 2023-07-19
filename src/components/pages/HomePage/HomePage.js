@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import classNames from "classnames";
 import { fetchPolls, selectPolls } from "reducers/pollSlice";
 import PollSection from "components/poll/PollSection";
 import { LOGIN_PATH } from "constants";
+import { cssClasses } from "cssClasses";
 
 /**
  * @description Represents the home page
@@ -13,6 +15,7 @@ const HomePage = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const polls = useSelector(selectPolls);
+	const [isShowUnansweredPolls, setIsShowUnansweredPolls] = useState(true);
 
 	useEffect(() => {
 		if (!location.state?.id) {
@@ -21,6 +24,10 @@ const HomePage = () => {
 
 		dispatch(fetchPolls());
 	}, []);
+
+	const toggleChange = () => {
+		setIsShowUnansweredPolls(!isShowUnansweredPolls);
+	}
 
 	const filterAnsweredQuestions = () => {
 		const answeredQuestions = [];
@@ -53,14 +60,27 @@ const HomePage = () => {
 		<div
 			data-test-id="home-page"
 			className="home-page">
-			<PollSection
+			<div className={classNames([cssClasses.flex])}>
+				<input
+					type="radio"
+					value={true}
+					checked={isShowUnansweredPolls}
+					onChange={toggleChange}
+				/>
+				<input
+					type="radio"
+					value={false}
+					onChange={toggleChange}
+				/>
+			</div>
+			{isShowUnansweredPolls ? <PollSection
 				title="New Questions"
 				polls={filterUnansweredQuestions()}
-			/>
-			<PollSection
+			/> : null}
+			{!isShowUnansweredPolls ? <PollSection
 				title="Done"
 				polls={filterAnsweredQuestions()}
-			/>
+			/> : null}
 		</div>
 	);
 };
