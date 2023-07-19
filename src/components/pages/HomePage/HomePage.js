@@ -64,14 +64,18 @@ const HomePage = () => {
 				<input
 					type="radio"
 					value={true}
+					name="toggle"
 					checked={isShowUnansweredPolls}
 					onChange={toggleChange}
 				/>
+				<label>Unanswered questions</label>
 				<input
 					type="radio"
 					value={false}
+					name="toggle"
 					onChange={toggleChange}
 				/>
+				<label>Answered questions</label>
 			</div>
 			{isShowUnansweredPolls ? <PollSection
 				title="New Questions"
