@@ -2,18 +2,19 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import classNames from "classnames";
-import { fetchUsers, selectUsers } from "reducers/userSlice";
+import { fetchUsers, selectIsAuthorized, selectUsers } from "reducers/userSlice";
 import { LOGIN_PATH } from "constants";
 import { cssClasses } from "cssClasses";
 
 const LeaderboardPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const isAuthorized = useSelector(selectIsAuthorized);
 	const dispatch = useDispatch();
 	const users = useSelector(selectUsers);
 
 	useEffect(() => {
-		if (!location.state?.id) {
+		if (!isAuthorized) {
 			navigate(LOGIN_PATH, { state: { from: location.pathname } });
 		}
 
