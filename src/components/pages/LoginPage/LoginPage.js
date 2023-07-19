@@ -30,7 +30,9 @@ const LoginPage = () => {
 	useEffect(() => {
 		if (isAuthorized) {
 			clearInputFields();
-			navigate(location.state?.from ? location.state.from : HOME_PATH);
+			navigate(location.state?.from ? location.state.from : HOME_PATH, {
+				state: { id: id },
+			});
 		}
 	}, [isAuthorized]);
 
