@@ -42,6 +42,12 @@ const Option = ({
 			);
 		}
 
+		const voteInfo = (
+			<p className="votes">
+				Votes: {noOfVotes} ({(noOfVotes / noOfUsers) * 100}%)
+			</p>
+		);
+
 		if (isSelected) {
 			return (
 				<>
@@ -51,12 +57,12 @@ const Option = ({
 						value="Selected"
 						disabled
 					/>
-					<p className="votes">
-						Votes: {noOfVotes} ({(noOfVotes / noOfUsers) * 100}%)
-					</p>
+					{voteInfo}
 				</>
 			);
 		}
+
+		return voteInfo;
 	};
 	return (
 		<div className={classNames([cssClasses.flexColumn, "option-in-poll"])}>
