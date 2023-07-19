@@ -43,7 +43,7 @@ const PollDetails = () => {
 		dispatch(fetchPolls());
 
 		if (location.state?.id && !poll?.id) {
-			navigate(NOT_FOUND_PATH);
+			navigate(NOT_FOUND_PATH, {state: { id: location.state?.id }});
 		}
 
 		if (poll?.id) {
