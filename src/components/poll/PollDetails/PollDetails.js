@@ -11,6 +11,7 @@ import {
 } from "reducers/pollSlice";
 import {
 	fetchUsers,
+	selectIsAuthorized,
 	selectIsUserDataLoading,
 	selectUserById,
 	selectUsers,
@@ -23,6 +24,7 @@ const PollDetails = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const isAuthorized = useSelector(selectIsAuthorized);
 	const isPollDataLoading = useSelector(selectIsPollDataLoading);
 	const isUserDataLoading = useSelector(selectIsUserDataLoading);
 	const poll = useSelector((state) =>
@@ -41,15 +43,16 @@ const PollDetails = () => {
 	let pollId = sessionStorage.getItem("pollId");
 
 	useEffect(() => {
-		if (!location.state?.id) {
+		if (!location.state?.id || !isAuthorized) {
 			navigate(LOGIN_PATH, { state: { from: location.pathname } });
 		}
 
 		dispatch(fetchPolls());
 
 		if (
-			pollTime.isSame(moment(), "day") ||
-			(location.state?.id && !pollId && !poll?.id)
+			isAuthorized &&
+			(pollTime.isSame(moment(), "day") ||
+				(location.state?.id && !pollId && !poll?.id))
 		) {
 			navigate(NOT_FOUND_PATH, { state: { id: location.state?.id } });
 		}
